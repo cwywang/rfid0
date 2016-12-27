@@ -2,6 +2,7 @@ from flask import Flask,render_template,request,redirect,url_for
 import re
 from flask_sqlalchemy import SQLAlchemy
 import os
+import sqlite3
 basedir = os.path.abspath(os.path.dirname(__file__))
 #from send_mail import Send_Mail
 App=Flask(__name__)
