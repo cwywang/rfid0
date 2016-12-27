@@ -7,6 +7,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 App=Flask(__name__)
 App.config['SQLALCHEMY_DATABASE_URI']='sqlite:///'+os.path.join(basedir,'data.sqlite')
 App.config['SQLALCHEMY_COMMIT_ON_TEARDOWN']=True
+App.config['SQLALCHEMY_TRACK_MODIFICATIONS']=True
 db=SQLAlchemy(App)
 #mail=Send_Mail('system@email.doforyou.gift','Aa741077081')
 @App.route('/rfidcard',methods=['POST'])
