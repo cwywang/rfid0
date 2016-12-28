@@ -73,8 +73,7 @@ def postScore():
 	operator=request.form['operator']
 	userinfo=ScoreInfo(card_id=card_id,
 						score_change=score_change,
-						change_time=change_time,
-						operator=operator)
+						change_time=change_time)
 	db.session.add(userinfo)
 	db.session.commit()
 	return 'post success',200
@@ -87,8 +86,7 @@ def getScore(card_id):
 		for item in records:
 			a.append({'card_id':item.card_id,
 					'score_change':item.score_change,
-					'change_time':item.change_time,
-					'operator':item.operator})
+					'change_time':item.change_time})
 		return jsonify({'records':a})
 	else:
 		return 'not found',200
@@ -133,8 +131,7 @@ def addUser(user_id):
 def addScore(card_id):
 	score=ScoreInfo(card_id=card_id,
 					change_time="change_time",
-					score_change="score_change",
-					operator="operator")
+					score_change="score_change")
 	db.session.add(score)
 	db.session.commit()
 	return "123",200
@@ -175,7 +172,6 @@ class ScoreInfo(db.Model):
 	card_id=db.Column(db.String(64))
 	change_time=db.Column(db.String(64))
 	score_change=db.Column(db.String(64))
-	operator=db.Column(db.String(64))
 	def __repr__(self):
 		return '<RfidCard %r>'%self.name
 if __name__=='__main__':
