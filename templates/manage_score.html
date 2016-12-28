@@ -30,7 +30,22 @@
 {% block content %}
 <div class="container">
     <div class="page-header">
-       <a>超市会员卡后台管理</a>
+        <table id="mytable" border="1">
+                 <tr id="table_title">
+                    <td> 卡片ID号</td>
+                    <td> 变更时间</td>
+                    <td> 变更积分 </td>
+                    <td> 操作员 </td>
+                </tr>
+			{% for item in scores %}
+				<tr>
+					<td> {{item.card_id}} </td>
+					<td> {{item.change_time}} </td>
+					<td> {{item.score_change}} </td>
+					<td> {{item.operator}} </td>
+				</tr>
+			{% endfor %}
+		</table>
     </div>
 </div>
 {% endblock %}

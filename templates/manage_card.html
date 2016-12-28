@@ -1,5 +1,5 @@
 {% extends "bootstrap/base.html" %}
-{% block title %}超市会员卡管理后台{% endblock %}
+{% block title %}超市管理后台{% endblock %}
 {% block head %}
     {{super()}}
     <link href="{{url_for('static',filename='manage.css')}}" rel="stylesheet" type="text/css"/>
@@ -30,7 +30,22 @@
 {% block content %}
 <div class="container">
     <div class="page-header">
-       <a>超市会员卡后台管理</a>
+        <table id="mytable" border="1">
+                <tr id="table_title">
+                    <td class="title_td"> 卡片ID号</td>
+                    <td class="title_td"> 用户ID号</td>
+                    <td class="title_td"> 建卡时间 </td>
+                    <td class="title_td"> 是否冻结 </td>
+                </tr>
+			{% for item in cards %}
+				<tr>
+					<td> {{item.card_id}} </td>
+					<td> {{item.user_id}} </td>
+					<td> {{item.card_time}} </td>
+					<td> {{item.freeze}} </td>
+				</tr>
+			{% endfor %}
+		</table>
     </div>
 </div>
 {% endblock %}

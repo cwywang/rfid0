@@ -1,0 +1,16 @@
+#mytable {
+ width: 80%;
+ padding: 0;
+ margin-left: 10%;
+ margin-right: 10%;
+ color: #234567;
+}
+tr{
+	height: 50px;
+	color: #29292f;
+	text-align: center;
+}
+#table_title{
+	background: #29292f;
+	color: #fff;
+}

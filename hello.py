@@ -96,17 +96,46 @@ def getScore(card_id):
 ###########################################################################
 ###########################################################################
 #管理界面
-@App.route('/manage',methods=['GET'])
-def manage():
-	return render_template("manage.html",name=123)
+@App.route('/manage/<func>',methods=['GET'])
+def manage(func):
+	if func=="card":
+		cards=RfidCard.query.filter_by().all()
+		return render_template("manage_card.html",cards=cards)
+	if func=="user":
+		users=UserInfo.query.filter_by().all()
+		return render_template("manage_user.html",users=users)
+	if func=="score":
+		scores=ScoreInfo.query.filter_by().all()
+		return render_template("manage_score.html",scores=scores)
+	if func=="home":
+		return render_template("manage.html")
+	return "没得了...",404
 ###########################################################################
-@App.route('/addCard',methods=['GET'])
-def addCard():
-	rfidcard=RfidCard(card_id="card_id",
-						user_id="user_id",
-						card_time="card_time",
-						freeze="freeze")
-	db.session.add(rfidcard)
+@App.route('/addCard/<card_id>',methods=['GET'])
+def addCard(card_id):
+	card=RfidCard(card_id=card_id,
+					user_id="user_id",
+					card_time="card_time",
+					freeze="freeze")
+	db.session.add(card)
+	db.session.commit()
+	return "123",200
+@App.route('/addUser/<user_id>',methods=['GET'])
+def addUser(user_id):
+	user=UserInfo(user_id=user_id,
+					user_name="user_name",
+					phone_num="phone_num",
+					score="score")
+	db.session.add(user)
+	db.session.commit()
+	return "123",200
+@App.route('/addScore/<card_id>',methods=['GET'])
+def addScore(card_id):
+	score=ScoreInfo(card_id=card_id,
+					change_time="change_time",
+					score_change="score_change",
+					operator="operator")
+	db.session.add(score)
 	db.session.commit()
 	return "123",200
 @App.route('/init',methods=['GET'])
