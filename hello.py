@@ -1,6 +1,7 @@
 from flask import Flask,render_template,request,redirect,url_for
 import re
 from flask_sqlalchemy import SQLAlchemy
+from flask_bootstrap import Bootstrap
 import os
 from flask import request,jsonify
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -9,6 +10,7 @@ App.config['SQLALCHEMY_DATABASE_URI']='sqlite:///'+os.path.join(basedir,'data.sq
 App.config['SQLALCHEMY_COMMIT_ON_TEARDOWN']=True
 App.config['SQLALCHEMY_TRACK_MODIFICATIONS']=True
 db=SQLAlchemy(App)
+bootstrap=Bootstrap(App)
 #post RFID卡的信息
 @App.route('/postCard',methods=['POST'])
 def postCard():
@@ -16,11 +18,11 @@ def postCard():
 	user_id=request.form['user_id']
 	card_time=request.form['card_time']
 	freeze=request.form['freeze']
-	rfidcard=RfidCard(card_id=card_id,
-						user_id=user_id,
-						card_time=card_time,
-						freeze=freeze)
-	db.session.add(rfidcard)
+	card=RfidCard(card_id=card_id,
+					user_id=user_id,
+					card_time=card_time,
+					freeze=freeze)
+	db.session.add(card)
 	db.session.commit()
 	return 'post success',200
 
@@ -34,7 +36,7 @@ def getCard(card_id):
 						'card_time':card.card_time,
 						'freeze':card.freeze})
 	else:
-		return 'not found',404
+		return 'not found',200
 ###########################################################################
 #post UserInfo的信息
 @App.route('/postUser',methods=['POST'])
@@ -60,18 +62,16 @@ def getUser(user_id):
 						'phone_num':user.phone_num,
 						'score':user.score})
 	else:
-		return 'not found',404
+		return 'not found',200
 ###########################################################################
 #post ScoreInfo的信息
 @App.route('/postScore',methods=['POST'])
 def postScore():
-	record_id=request.form['record_id']
 	card_id=request.form['card_id']
 	score_change=request.form['score_change']
 	change_time=request.form['change_time']
 	operator=request.form['operator']
-	userinfo=ScoreInfo(record_id=record_id,
-						card_id=card_id,
+	userinfo=ScoreInfo(card_id=card_id,
 						score_change=score_change,
 						change_time=change_time,
 						operator=operator)
@@ -79,23 +79,26 @@ def postScore():
 	db.session.commit()
 	return 'post success',200
 #get ScoreInfo的信息
-@App.route('/getScore/<record_id>',methods=['GET'])
-def getScore(record_id):
-	records=ScoreInfo.query.filter_by(record_id=record_id).all()
+@App.route('/getScore/<card_id>',methods=['GET'])
+def getScore(card_id):
+	records=ScoreInfo.query.filter_by(card_id=card_id).all()
 	if records:
 		a=list()
 		for item in records:
-			a.append({'record_id':item.record_id,
-					'card_id':item.card_id,
+			a.append({'card_id':item.card_id,
 					'score_change':item.score_change,
 					'change_time':item.change_time,
 					'operator':item.operator})
 		return jsonify({'records':a})
 	else:
-		return 'not found',404
+		return 'not found',200
 ###########################################################################
 ###########################################################################
 ###########################################################################
+#管理界面
+@App.route('/manage',methods=['GET'])
+def manage():
+	return render_template("manage.html",name=123)
 ###########################################################################
 @App.route('/addCard',methods=['GET'])
 def addCard():
@@ -121,7 +124,7 @@ class RfidCard(db.Model):
 	__tablename__='rfidcard'
 	id=db.Column(db.Integer,primary_key=True)
 	card_id=db.Column(db.String(64),unique=True)
-	user_id=db.Column(db.String(64),unique=True)
+	user_id=db.Column(db.String(64))
 	card_time=db.Column(db.String(64))
 	freeze=db.Column(db.String(64))
 	def __repr__(self):
@@ -136,11 +139,10 @@ class UserInfo(db.Model):
 	score=db.Column(db.String(64))
 	def __repr__(self):
 		return '<RfidCard %r>'%self.name
-#积分变动记录：记录编号/卡号/变动时间/变动积分/操作员
+#积分变动记录：卡号/变动时间/变动积分/操作员
 class ScoreInfo(db.Model):
 	__tablename__='scoreinfo'
 	id=db.Column(db.Integer,primary_key=True)
-	record_id=db.Column(db.String(64),unique=True)
 	card_id=db.Column(db.String(64))
 	change_time=db.Column(db.String(64))
 	score_change=db.Column(db.String(64))
