@@ -12,7 +12,7 @@ App.config['SQLALCHEMY_TRACK_MODIFICATIONS']=True
 db=SQLAlchemy(App)
 bootstrap=Bootstrap(App)
 #post 修改积分
-App.route('/changeScore',methods=['POST'])
+@App.route('/changeScore',methods=['POST'])
 def changeScore():
 	user_id=request.form['user_id']
 	score=request.form['score']
@@ -25,7 +25,7 @@ def changeScore():
 	else:
 		return "not found",404
 #post 修改冻结
-App.route('/freezeCard',methods=['POST'])
+@App.route('/freezeCard',methods=['POST'])
 def freezeCard():
 	card_id=request.form['card_id']
 	freeze=request.form['freeze']
