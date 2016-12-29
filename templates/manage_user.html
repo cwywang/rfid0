@@ -2,7 +2,7 @@
 {% block title %}超市会员卡管理后台{% endblock %}
 {% block head %}
     {{super()}}
-    <link href="{{url_for('static',filename='manage.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{url_for('static',filename='manager.css')}}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 {% block navbar %}
 <div id="kk" class="navbar navbar-inverse" role="navigation">
@@ -38,7 +38,6 @@
                     <td> 用户名</td>
                     <td> 电话号码 </td>
                     <td> 积分余额 </td>
-                    <td> 操作 </td>
                 </tr>
             {% for item in users %}
                 <tr>
