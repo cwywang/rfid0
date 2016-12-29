@@ -11,6 +11,32 @@ App.config['SQLALCHEMY_COMMIT_ON_TEARDOWN']=True
 App.config['SQLALCHEMY_TRACK_MODIFICATIONS']=True
 db=SQLAlchemy(App)
 bootstrap=Bootstrap(App)
+#post 修改积分
+App.route('/changeScore',methods=['POST'])
+def changeScore():
+	user_id=request.form['user_id']
+	score=request.form['score']
+	user=UserInfo.query.filter_by(user_id=user_id).first()
+	if user:
+		user.score=score
+		db.session.add(user)
+		db.session.commit()
+		return 'post success',200
+	else:
+		return "not found",404
+#post 修改冻结
+App.route('/freezeCard',methods=['POST'])
+def freezeCard():
+	card_id=request.form['card_id']
+	freeze=request.form['freeze']
+	card=RfidCard.query.filter_by(card_id=card_id).first()
+	if user:
+		card.freeze=freeze
+		db.session.add(card)
+		db.session.commit()
+		return 'post success',200
+	else:
+		return "not found",404
 #post RFID卡的信息
 @App.route('/postCard',methods=['POST'])
 def postCard():
@@ -18,7 +44,11 @@ def postCard():
 	user_id=request.form['user_id']
 	card_time=request.form['card_time']
 	freeze=request.form['freeze']
-	card=RfidCard(card_id=card_id,
+	card=RfidCard.query.filter_by(card_id=card_id).first()
+	if card:
+		return 'not found',404
+	else:
+		card=RfidCard(card_id=card_id,
 					user_id=user_id,
 					card_time=card_time,
 					freeze=freeze)
@@ -45,10 +75,14 @@ def postUser():
 	user_name=request.form['user_name']
 	phone_num=request.form['phone_num']
 	score=request.form['score']
-	userinfo=UserInfo(user_id=user_id,
-						user_name=user_name,
-						phone_num=phone_num,
-						score=score)
+	userinfo=UserInfo.query.filter_by(user_id=user_id).first()
+	if userinfo:
+		return "not found",404
+	else:
+		userinfo=UserInfo(user_id=user_id,
+							user_name=user_name,
+							phone_num=phone_num,
+							score=score)
 	db.session.add(userinfo)
 	db.session.commit()
 	return 'post success',200
@@ -62,7 +96,7 @@ def getUser(user_id):
 						'phone_num':user.phone_num,
 						'score':user.score})
 	else:
-		return 'not found',200
+		return 'not found',404
 ###########################################################################
 #post ScoreInfo的信息
 @App.route('/postScore',methods=['POST'])
@@ -71,9 +105,13 @@ def postScore():
 	score_change=request.form['score_change']
 	change_time=request.form['change_time']
 	operator=request.form['operator']
-	userinfo=ScoreInfo(card_id=card_id,
-						score_change=score_change,
-						change_time=change_time)
+	records=ScoreInfo.query.filter_by(card_id=card_id).all()
+	if records:
+		return "not found",404
+	else:
+		userinfo=ScoreInfo(card_id=card_id,
+							score_change=score_change,
+							change_time=change_time)
 	db.session.add(userinfo)
 	db.session.commit()
 	return 'post success',200
@@ -117,7 +155,7 @@ def addCard(card_id):
 					freeze="freeze")
 	db.session.add(card)
 	db.session.commit()
-	return "123",200
+	return card_id,200
 @App.route('/addUser/<user_id>',methods=['GET'])
 def addUser(user_id):
 	user=UserInfo(user_id=user_id,
@@ -126,7 +164,7 @@ def addUser(user_id):
 					score="score")
 	db.session.add(user)
 	db.session.commit()
-	return "123",200
+	return user_id,200
 @App.route('/addScore/<card_id>',methods=['GET'])
 def addScore(card_id):
 	score=ScoreInfo(card_id=card_id,
@@ -134,7 +172,7 @@ def addScore(card_id):
 					score_change="score_change")
 	db.session.add(score)
 	db.session.commit()
-	return "123",200
+	return card_id,200
 @App.route('/init',methods=['GET'])
 def init():
 	db.drop_all()
@@ -165,7 +203,7 @@ class UserInfo(db.Model):
 	score=db.Column(db.String(64))
 	def __repr__(self):
 		return '<RfidCard %r>'%self.name
-#积分变动记录：卡号/变动时间/变动积分/操作员
+#积分变动记录：卡号/变动时间/变动积分
 class ScoreInfo(db.Model):
 	__tablename__='scoreinfo'
 	id=db.Column(db.Integer,primary_key=True)

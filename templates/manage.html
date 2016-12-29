@@ -5,7 +5,7 @@
     <link href="{{url_for('static',filename='manage.css')}}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 {% block navbar %}
-<div class="navbar navbar-inverse" role="navigation">
+<div id="kk" class="navbar navbar-inverse" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -26,11 +26,20 @@
     </div>
 </div>
 {% endblock %}
-
 {% block content %}
-<div class="container">
-    <div class="page-header">
-       <a>超市会员卡后台管理</a>
+<div>
+    <div id="div_back">
+        <img src="{{url_for('static',filename='home.jpg')}}" alt="some_text">
+        <div id="back"></div>
+    </div>
+    <div id="title"><H1>2016</H1></div>
+    <div id="title1"><H1>Background management system</H1></div>
+</div>
+<div id="kk" class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+            <p id="p">Copyright©2016 hadnone.com.Tan77-QinY-ZHK. All Rights Reserved. </p>
+        <div class="navbar-collapse collapse">
+        </div>
     </div>
 </div>
 {% endblock %}
