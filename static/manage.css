@@ -31,10 +31,10 @@ img{
 	position: absolute;
 	left:0;
 	top:0;
-		filter:alpha(opacity=60); 
--moz-opacity:0.6; 
--khtml-opacity: 0.6; 
-opacity: 0.6; 
+		filter:alpha(opacity=30); 
+-moz-opacity:0.3; 
+-khtml-opacity: 0.3; 
+opacity: 0.3; 
 }
 #title{
 	position: absolute;
@@ -44,7 +44,7 @@ opacity: 0.6;
 }
 #title h1{
 	font-size: 140px;
-	color:#888;
+	color:#999;
 }
 #title1{
 	position: absolute;
@@ -54,7 +54,7 @@ opacity: 0.6;
 }
 #title1 h1{
 	font-size: 60px;
-	color:#888;
+	color:#999;
 }
 
 #kk{

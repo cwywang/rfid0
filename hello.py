@@ -104,14 +104,9 @@ def postScore():
 	card_id=request.form['card_id']
 	score_change=request.form['score_change']
 	change_time=request.form['change_time']
-	operator=request.form['operator']
-	records=ScoreInfo.query.filter_by(card_id=card_id).all()
-	if records:
-		return "not found",404
-	else:
-		userinfo=ScoreInfo(card_id=card_id,
-							score_change=score_change,
-							change_time=change_time)
+	userinfo=ScoreInfo(card_id=card_id,
+						score_change=score_change,
+						change_time=change_time)
 	db.session.add(userinfo)
 	db.session.commit()
 	return 'post success',200

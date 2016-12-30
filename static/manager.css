@@ -31,10 +31,10 @@ img{
 	position: absolute;
 	left:0;
 	top:0;
-		filter:alpha(opacity=60); 
--moz-opacity:0.6; 
--khtml-opacity: 0.6; 
-opacity: 0.6; 
+		filter:alpha(opacity=40); 
+-moz-opacity:0.4; 
+-khtml-opacity: 0.4; 
+opacity: 0.4; 
 }
 #title{
 	position: absolute;
