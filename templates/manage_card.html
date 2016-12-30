@@ -31,22 +31,25 @@
     <div id="div_back">
         <img src="{{url_for('static',filename='home.jpg')}}" alt="some_text">
         <div id="back"></div>
-          <table id="mytable" border="1">
-                <tr id="table_title">
-                    <td class="title_td"> 卡片ID号</td>
-                    <td class="title_td"> 用户ID号</td>
-                    <td class="title_td"> 建卡时间 </td>
-                    <td class="title_td"> 是否冻结 </td>
-                </tr>
-                {% for item in cards %}
-                 <tr>
-                    <td> {{item.card_id}} </td>
-                    <td> {{item.user_id}} </td>
-                    <td> {{item.card_time}} </td>
-                    <td> {{item.freeze}} </td>
+        <div style="overflow-x: auto; overflow-y: auto;position: absolute;padding: 0;top:10%;left: 10%;
+            right: 10%; height: 400px; width:80%;">
+            <table id="mytable" border="1">
+                    <tr id="table_title">
+                        <td class="title_td"> 卡片ID号</td>
+                        <td class="title_td"> 用户ID号</td>
+                        <td class="title_td"> 建卡时间 </td>
+                        <td class="title_td"> 是否冻结 </td>
                     </tr>
-                {% endfor %}
-        </table>
+                    {% for item in cards %}
+                    <tr>
+                        <td> {{item.card_id}} </td>
+                        <td> {{item.user_id}} </td>
+                        <td> {{item.card_time}} </td>
+                        <td> {{item.freeze}} </td>
+                    </tr>
+                    {% endfor %}
+            </table>
+        </div>
     </div>
 </div>
 <div id="kk" class="navbar navbar-inverse" role="navigation">

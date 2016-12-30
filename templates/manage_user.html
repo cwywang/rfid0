@@ -32,22 +32,25 @@
     <div id="div_back">
         <img src="{{url_for('static',filename='home.jpg')}}" alt="some_text">
         <div id="back"></div>
-        <table id="mytable" border="1">
-                <tr id="table_title">
-                    <td> 用户ID号</td>
-                    <td> 用户名</td>
-                    <td> 电话号码 </td>
-                    <td> 积分余额 </td>
-                </tr>
-            {% for item in users %}
-                <tr>
-                    <td> {{item.user_id}} </td>
-                    <td> {{item.user_name}} </td>
-                    <td> {{item.phone_num}} </td>
-                    <td> {{item.score}} </td>
-                </tr>
-            {% endfor %}
-        </table>
+        <div style="overflow-x: auto; overflow-y: auto;position: absolute;padding: 0;top:10%;left: 10%;
+            right: 10%; height: 400px; width:80%;">
+            <table id="mytable" border="1">
+                    <tr id="table_title">
+                        <td> 用户ID号</td>
+                        <td> 用户名</td>
+                        <td> 电话号码 </td>
+                        <td> 积分余额 </td>
+                    </tr>
+                {% for item in users %}
+                    <tr>
+                        <td> {{item.user_id}} </td>
+                        <td> {{item.user_name}} </td>
+                        <td> {{item.phone_num}} </td>
+                        <td> {{item.score}} </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
 </div>
 <div id="kk" class="navbar navbar-inverse" role="navigation">
