@@ -30,7 +30,7 @@ def freezeCard():
 	card_id=request.form['card_id']
 	freeze=request.form['freeze']
 	card=RfidCard.query.filter_by(card_id=card_id).first()
-	if user:
+	if card:
 		card.freeze=freeze
 		db.session.add(card)
 		db.session.commit()
